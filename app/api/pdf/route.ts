@@ -1,4 +1,4 @@
-import chromium from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 
 export const runtime = "nodejs";
@@ -8,20 +8,20 @@ export async function POST(req: Request) {
 
   const { score, status, country, type, sources } = data;
 
-  const executablePath = await chromium.executablePath;
-
   const browser = await puppeteer.launch({
     args: chromium.args,
-    executablePath: executablePath || undefined,
+    executablePath: await chromium.executablePath(),
     headless: true,
   });
 
   const page = await browser.newPage();
 
+  // 🎨 Status color
   let color = "green";
   if (status === "Suspicious") color = "orange";
   if (status === "Malicious") color = "red";
 
+  // 🧠 Explanation
   const explanation = `
     ${
       status === "Safe"
