@@ -1,6 +1,7 @@
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 
+export const maxDuration = 60;
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
@@ -9,11 +10,14 @@ export async function POST(req: Request) {
 
     const { score, status, country, type, sources } = data;
 
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: true,
-    });
+const executablePath = await chromium.executablePath();
+
+const browser = await puppeteer.launch({
+  args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
+  executablePath: executablePath || undefined,
+  headless: true,
+});
+
 
     const page = await browser.newPage();
 
