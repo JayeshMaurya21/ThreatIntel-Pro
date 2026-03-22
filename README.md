@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+**# 🔍 ThreatIntel — Threat Intelligence Lookup Tool**
 
-## Getting Started
+> A modern web-based threat intelligence platform to analyze IP addresses, domains, and file hashes using multiple security data sources.
 
-First, run the development server:
+---
 
-```bash
+**## 🚀 Overview**
+
+ThreatIntel is designed to assist SOC Analysts, Threat Hunters, and Security Engineers in quickly validating Indicators of Compromise (IOCs).
+
+It aggregates threat intelligence from multiple sources and presents a unified, easy-to-understand risk analysis with downloadable reports.
+
+---
+
+## ✨ Features
+
+- 🔎 **Multi-IOC Analysis**
+  - IP Address
+  - Domain Name
+  - File Hash (MD5, SHA1, SHA256)
+
+- 🌐 **Threat Intelligence Aggregation**
+  - VirusTotal
+  - AbuseIPDB
+  - AlienVault OTX
+
+- 📊 **Smart Risk Scoring**
+  - Automatically classifies as:
+    - 🟢 Safe
+    - 🟡 Suspicious
+    - 🔴 Malicious
+
+- 🌍 **Geolocation Detection**
+  - Identifies country of origin for IPs
+
+- 📄 **Downloadable PDF Reports**
+  
+  - Generates a structured investigation report
+  - Useful for SOC documentation
+
+- ⚡ **Fast & Lightweight**
+  - No login required
+  - Instant analysis
+
+---
+
+**## 🧠 Use Case**
+
+This tool is useful for:
+
+- SOC Analysts validating alerts
+- Threat hunters investigating suspicious indicators
+- Incident responders during triage
+- Security enthusiasts learning threat intelligence
+
+---
+
+**## 🛠️ Tech Stack**
+
+- **Frontend:** Next.js (React)
+- **Styling:** Tailwind CSS
+- **APIs:**
+  - VirusTotal API
+  - AbuseIPDB API
+  - AlienVault OTX API
+- **PDF Generation:** jsPDF (client-side)
+
+---
+
+**## ⚙️ Setup & Installation**
+
+Install dependencies: 
+npm install
+
+Add API Keys: 
+Create a .env.local file in root:
+
+VT_API_KEY=your_key_here
+ABUSEIPDB_API_KEY=your_key_here
+OTX_API_KEY=your_key_here
+
+Run the project:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**🌐 Live Demo**
+https://threat-intel-pro.vercel.app/
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Screenshots:**
+<img width="1898" height="904" alt="image" src="https://github.com/user-attachments/assets/546ac8c3-df96-41e8-9860-4018016735d8" />
 
-## Learn More
+<img width="1902" height="890" alt="image" src="https://github.com/user-attachments/assets/dd86bf5f-3d55-4c5a-b447-27c7c5ba6571" />
 
-To learn more about Next.js, take a look at the following resources:
+**👨‍💻 Author**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Jayesh Maurya
+Cyber Security Engineer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+⭐ Support
 
-## Deploy on Vercel
+If you found this useful:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+👉 Star the repository
+👉 Share with others in cybersecurity
