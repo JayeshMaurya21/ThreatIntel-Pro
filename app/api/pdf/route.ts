@@ -1,7 +1,6 @@
-import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer-core";
+import { NextResponse } from "next/server";
+import html_to_pdf from "html-pdf-node";
 
-export const maxDuration = 60;
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
@@ -10,23 +9,10 @@ export async function POST(req: Request) {
 
     const { score, status, country, type, sources } = data;
 
-const executablePath = await chromium.executablePath();
-
-const browser = await puppeteer.launch({
-  args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
-  executablePath: executablePath || undefined,
-  headless: true,
-});
-
-
-    const page = await browser.newPage();
-
-    // 🎨 Status color
     let color = "green";
     if (status === "Suspicious") color = "orange";
     if (status === "Malicious") color = "red";
 
-    // 🧠 Explanation
     const explanation =
       status === "Safe"
         ? "No significant malicious activity detected."
@@ -34,7 +20,6 @@ const browser = await puppeteer.launch({
         ? "Suspicious indicators found. Further investigation recommended."
         : "Highly malicious indicator. Immediate action required.";
 
-    // 📄 HTML content
     const html = `
       <html>
         <body style="font-family: Arial; padding: 20px;">
@@ -65,30 +50,21 @@ const browser = await puppeteer.launch({
       </html>
     `;
 
-    // 🧠 Proper render wait
-    await page.setContent(html, {
-      waitUntil: "networkidle0",
-    });
+    const file = { content: html };
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // 📄 Generate PDF (ONLY ONE declaration)
-    const pdfBuffer = await page.pdf({
+    const pdfBuffer = await html_to_pdf.generatePdf(file, {
       format: "A4",
-      printBackground: true,
     });
 
-    await browser.close();
-
-    return new Response(pdfBuffer as unknown as BodyInit, {
+    return new NextResponse(pdfBuffer, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": "attachment; filename=report.pdf",
       },
     });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "PDF generation failed" }),
+    return NextResponse.json(
+      { error: "PDF generation failed" },
       { status: 500 }
     );
   }
