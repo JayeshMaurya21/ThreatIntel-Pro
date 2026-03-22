@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "html-pdf-node": "^1.0.8",
+    "jspdf": "^4.2.1",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"

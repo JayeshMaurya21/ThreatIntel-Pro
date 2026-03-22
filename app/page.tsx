@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import jsPDF from "jspdf";
 
 type AnalysisResult = {
   score: number;
@@ -128,19 +129,40 @@ export default function Home() {
             {/* PDF */}
             <button
               onClick={() => {
-                fetch("/api/pdf", {
-                  method: "POST",
-                  body: JSON.stringify(result),
-                })
-                  .then((res) => res.blob())
-                  .then((blob) => {
-                    const url = window.URL.createObjectURL(blob);
-                    window.open(url);
-                  });
-              }}
-              className="mt-6 bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl"
-            >
-              📄 Download Report
+    if (!result) return;
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text("SentinelScope Threat Report", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Type: ${result.type}`, 20, 40);
+    doc.text(`Country: ${result.country}`, 20, 50);
+    doc.text(`Score: ${result.score}`, 20, 60);
+    doc.text(`Status: ${result.status}`, 20, 70);
+
+    doc.text("Threat Sources:", 20, 90);
+    doc.text(`VirusTotal: ${result.sources?.vtMalicious}`, 20, 100);
+    doc.text(`AbuseIPDB: ${result.sources?.abuseScore}`, 20, 110);
+    doc.text(`OTX: ${result.sources?.otxPulses}`, 20, 120);
+
+    doc.text("Analysis:", 20, 140);
+
+    const explanation =
+      result.status === "Safe"
+        ? "No significant malicious activity detected."
+        : result.status === "Suspicious"
+        ? "Suspicious indicators found. Further investigation recommended."
+        : "Highly malicious indicator. Immediate action required.";
+
+    doc.text(explanation, 20, 150);
+
+    doc.save("threat-report.pdf");
+  }}
+  className="mt-6 bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl"
+>
+  📄 Download Report
             </button>
 
           </div>
