@@ -95,8 +95,7 @@ https://threat-intel-pro.vercel.app/
 
 **👨‍💻 Author**
 
-Jayesh Maurya
-Cyber Security Engineer
+Jayesh 
 
 ⭐ Support
 
